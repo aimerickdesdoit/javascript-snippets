@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Google Map</title>
+        
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("jquery", "1.6.0");
+        </script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&language=fr"></script>
+        
+        <script type="text/javascript" src="./location.js"></script>
+        
+        <style type="text/css">
+            #gmap-map{
+                width: 100%;
+                height: 400px;
+                margin-bottom: 10px;
+            }
+            #gmap{
+              width: 275px;
+            }
+        </style>
+    </head> 
+    <body>
+        <script type="text/javascript">
+            $( function() {
+                $.locationOnGoogleMaps('gmap', '48.111761099999995', '-1.6802654000000716', '#search, #pays');
+            } );
+        </script>
+
+        <div class="location-wrapper">
+            <div id="gmap-message" class="error">Plusieurs lieux correspondent à l'adresse indiquée.<br />Veuillez cliquer sur l'un d'entre eux pour valider votre choix.</div>
+            <div id="gmap-message-not-found" class="error">Nous n'avons pas réussi à localiser l'adresse indiquée.<br />Veuillez préciser vos coordonnées et en vérifier l'orthographe.</div>
+            <div id="gmap-map" class="location-map"></div>
+            
+            coordonnées : <input type="text" name="gmap" id="gmap" readonly="readonly" /><br/>
+            recherche : <input type="text" name="search" id="search" />
+            <input type="hidden" name="pays" id="pays" value="France" />
+        </div>
+        <!--
+          google.maps.event.addListener(marker, 'click', function(event) {
+            infowindow = new google.maps.InfoWindow( {
+              content : '<b>HTML</b>'
+            });
+            infowindow.open(locationMap, marker);
+          });
+        -->
+    </body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+  <head>
+  </head>
+  <body>
+    <img src="google-medium.png" data-fullsrc="google-large.png">
+    <div id="size"></div>
+    <script>
+      (function() {
+        var each = function(array, func) {
+          for (var i=0; i<array.length; i++) {
+            func(array[i]);
+          }
+        };
+        var viewport_imgs = [], attr;
+        each(document.getElementsByTagName('img'), function(img) {
+          attr = img.getAttribute('data-fullsrc');
+          if (attr) {
+            img.setAttribute('data-mediumsrc', img.getAttribute('src'));
+            viewport_imgs.push(img);
+          }
+        });
+        var viewport = null;
+        var limit = 480;
+        var refresh = function(e, force) {
+          each(viewport_imgs, function(img) {
+            document.getElementById('size').innerHTML = window.innerWidth + '/' + limit;
+            var viewport_target = window.innerWidth > limit ? 'full' : 'medium';
+            if (viewport_target != viewport || force) {
+              viewport = viewport_target;
+              each(viewport_imgs, function(img){
+                img.setAttribute('src', img.getAttribute('data-' + viewport_target + 'src'));
+              });
+            }
+          });
+        };
+        window.onresize = refresh;
+        refresh(null, true);
+      })();    
+    </script>
+  </body>
+</html>

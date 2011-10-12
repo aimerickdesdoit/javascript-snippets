@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>CKEditor</title>
+        <script type="text/javascript" src="./javascripts/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript">
+          var images = [
+            ['Choisissez...', ''],
+            ['Google sprite', 'http://www.google.fr/images/nav_logo65.png'],
+            ['Google logo', 'google-large.png']
+          ];
+        </script>
+        <script type="text/javascript" src="./javascripts/image.js"></script>
+    </head> 
+    <body>
+        Image : "Liste des images", modification dynamique du champ "URL"<br/><br/>
+        <textarea name="content" id="content"></textarea>
+        <script type="text/javascript">
+            CKEDITOR.replace('content', {
+                toolbar: 'custom',
+                toolbar_custom:  [
+                    ['Undo','Redo','-', 'Bold','Italic','Underline','-','Subscript','Superscript', '-', 'NumberedList','BulletedList', '-'],
+                    ['Link','Unlink', '-', 'Table', '-', 'Styles','Format', '-', 'Image']
+                ],
+                skin: 'chris',
+                internalImages: images,
+                disableObjectResizing: true
+            });
+        </script>
+    </body>
+</html>
