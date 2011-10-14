@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  	<meta charset="utf-8">
+  	<title>Responsive jQuery slideshow</title>
+  	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+  	<style>
+  		body {
+  			font: 14px/34px sans-serif;
+  			max-width: 600px;
+  			min-width: 200px;
+  			margin: 0 auto;
+  			padding: 20px;
+  		}
+  		#slideshow {
+  			width: 100%;
+  			position: relative;
+  			/* If you want to add content below the slideshow add 
+  			overflow: hidden and height here. Also make this container 
+  			smaller in height than the images and adjust the height 
+  			with every @media query trigger point. */
+  		}
+  		img {
+  			top: 0;
+  			left: 0;
+  			width: 100%;
+  			max-width: 600px;
+  			height: auto;
+  			position: absolute;
+  		}
+  	</style>
+  	<script src="files/jquery.js"></script>
+  	<script>
+  		jQuery(function () {
+  			$(function () {
+  				// Simplest jQuery slideshow by Jonathan Snook
+  				$('#slideshow img:gt(0)').hide();
+  				setInterval(function () {
+  					$('#slideshow :first-child').fadeOut(1000).next('img').fadeIn(1000).end().appendTo('#slideshow');
+  				}, 4000);
+  			});
+  		});
+  	</script>
+  </head>
+  <body data-feedly-processed="yes">
+    <h1>Responsive jQuery slideshow</h1>
+    <p><a href="http://blog.kiskolabs.com/post/5602656614/responsive-jquery-slideshow">The blog post related to this example, can be found here</a></p>
+    <div id="slideshow">
+      <img style="display: block;" src="files/2.jpg"><img style="display: none;" src="files/3.jpg"><img style="display: none;" src="files/1.jpg">
+    </div>
+  </body>
+</html>
