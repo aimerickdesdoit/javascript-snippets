@@ -1,30 +1,33 @@
 <!doctype html>
   <head>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>  
-    <script type="text/javascript"> google.load("jquery", "1.4.2"); </script>
+    <script type="text/javascript"> google.load('jquery', '1.4.2'); </script>
     <script type="text/javascript" src="swipe.js"></script>  
     <script type="text/javascript">
       $(function(){
+        var container = $('#slider');
+        
+        var totalSlides = container.find('li').length;
         var interval = null;
         var slider = new Swipe($('#slider').get(0), {
           speed: 1000,
           delay: 3000,
           callback: function(){
             switch (slider.index) {
-              case 2:
+              case (totalSlides - 1):
                 clearTimeout(interval);
                 interval = setTimeout(function() {
                   slider.slide(slider.index + 1, slider.speed);
                 }, slider.delay);
                 return false;
-              case 3:
+              case totalSlides:
                 slider.slide(0, 0);
                 slider.start();
                 return false;
             }
           }
         });
-        $('#slider ul').append($('#slider li:first').clone());
+        container.find('ul').append(container.find('li:first').clone());
         $('#navigation a').click(function(){
           clearTimeout(slider.interval);
           clearTimeout(interval);
