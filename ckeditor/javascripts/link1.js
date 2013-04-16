@@ -7,11 +7,11 @@ CKEDITOR.on('dialogDefinition', function( ev ){
     dialogDefinition.removeContents('advanced');
     
     var internalLinks = ev.editor.config.internalLinks;
-    if(!internalLinks){
+    if(!internalLinks || internalLinks.length == 0){
       return;
     }
     
-    var label = ev.editor.config.internalLinksLabel || 'URL interne';
+    var label = ev.editor.config.internalLinksLabel || 'Liste des URLs internes';
     
     var infoTab = dialogDefinition.getContents( 'info' );
     var linkType = infoTab.get('linkType');
@@ -61,7 +61,7 @@ CKEDITOR.on('dialogDefinition', function( ev ){
       id : 'internalLinksOptions',
       children : [{
         type : 'select',
-        label : 'Liste des URLs internes',
+        label : label,
         id : 'internalLink',
         items: internalLinks,
         style : 'width: 100%;',
