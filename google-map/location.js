@@ -4,7 +4,8 @@
   $.locationOnGoogleMaps = function(id, lat, long, fieldsSelector, zoom) {
 
     // élément cible qui contiendra les coordonnées
-    var element = $('#' + id);
+    var $gps = $('#' + id);
+    var $zoom = $('#' + id + '-zoom');
 
     // élément de recherche
     var locationFieldSet = $(fieldsSelector);
@@ -12,14 +13,32 @@
     // éléments pour l'affichage des messages
     var multipleResultsMessage = $('#' + id + '-message').hide();
     var notFoundMessage = $('#' + id + '-message-not-found').hide();
-
-    // centre de la carte par défaut
-    var center = new google.maps.LatLng(lat, long);
-    element.val(center);
+    
+    // restauration des valeurs des champs
+    var value = $.trim($zoom.val());
+    if (!value || value == '') {
+        zoom = zoom || 16;
+    }
+    else {
+        zoom = parseInt(value);
+    }
+    $zoom.val(zoom);
+    
+    var value = $.trim($gps.val());
+    if (!value || value == '') {
+      // centre de la carte par défaut
+      var center = new google.maps.LatLng(lat, long);
+      $gps.val(center);
+    }
+    else {
+      // restauration de la valeur du champ
+      var latlng = value.substring(1, value.length - 1).split(',');
+      var center = new google.maps.LatLng($.trim(latlng[0]), $.trim(latlng[1]));
+    }
 
     // construction de la carte
     var locationMap = new google.maps.Map($('#' + id + '-map').get(0), {
-      zoom : (zoom || 16),
+      zoom : zoom,
       center : center,
       mapTypeId : google.maps.MapTypeId.ROADMAP,
       scaleControl : false,
@@ -29,6 +48,7 @@
       if (locationMap.getZoom() > 17){
         locationMap.setZoom(17);
       }
+      $zoom.val(locationMap.getZoom());
     });
 
     // marqueur principal
@@ -40,6 +60,9 @@
     google.maps.event.addListener(marker, 'dragend', function(event) {
       setLocation(marker.getPosition());
     });
+    google.maps.event.addListener(locationMap, 'click', function(event) {
+      setLocation(event.latLng);
+    });
 
     // changement de la position du marqueur principal
     function setLocation(location, bounds) {
@@ -49,7 +72,7 @@
         locationMap.fitBounds(bounds);
       }
       locationMap.panTo(location);
-      element.val(locationMap.getCenter());
+      $gps.val(locationMap.getCenter());
     }
 
     // multi marqueurs
@@ -114,14 +137,14 @@
             }
             multipleResultsMessage.show();
             locationMap.fitBounds(getResultSetBounds(results));
-            element.val('');
+            $gps.val('');
           }
         }
         else {
           notFoundMessage.show();
         }
         marker.setVisible(false);
-        element.val('');
+        $gps.val('');
         return false;
       });
     };
